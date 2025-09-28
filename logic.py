@@ -71,3 +71,4 @@ def show_plot():
     plt.title('Real values vs Predicted values')
     plt.colorbar(label='GDP')
     plt.show()
+
