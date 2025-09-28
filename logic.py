@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from category_encoders import TargetEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
 
 data_file = (pandas.read_csv('files/gdp_csv.csv')).drop('Country Name', axis=1)
 
@@ -18,13 +19,21 @@ def train_model():
     y = data_file['Value']
     y_log = numpy.log1p(y)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y_log, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y_log, test_size=0.2, random_state=5)
 
     encoder = TargetEncoder(cols=['Country Code'])
     X_train_encoded = encoder.fit_transform(X_train, y_train)
+    X_test_encoded = encoder.transform(X_test)
 
     model = LinearRegression()
     model.fit(X_train_encoded, y_train)
+
+    y_test_pred_log = model.predict(X_test_encoded)
+    y_test_original = numpy.expm1(y_test)
+    y_test_pred_original = numpy.expm1(y_test_pred_log)
+    r2_test_original = r2_score(y_test_original, y_test_pred_original)
+
+    print(f"R²: {r2_test_original:.4f}")
 
 
 def predict_gdp(country_code, year):
@@ -41,7 +50,6 @@ def predict_gdp(country_code, year):
 
 
 def show_plot():
-
     X = data_file.drop('Value', axis=1)
     y = data_file['Value']
     y_log = numpy.log1p(y)
@@ -63,7 +71,3 @@ def show_plot():
     plt.title('Real values vs Predicted values')
     plt.colorbar(label='GDP')
     plt.show()
-
-
-print("Model training...")
-train_model()
