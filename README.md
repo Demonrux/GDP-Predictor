@@ -45,7 +45,7 @@
 ### Качество модели:
 - ``*R² score*``: 0.9357 - отличный результат для экономических данных
 - График оценки прогноза модели
-<img width="900" height="800" alt="image" src="https://github.com/user-attachments/assets/25fb5945-807c-4ed6-95d1-079b9d0ba24e" />
+<img width="700" height="700" alt="image" src="https://github.com/user-attachments/assets/25fb5945-807c-4ed6-95d1-079b9d0ba24e" />
 Модель объясняет 93,57% дисперсии данных
 
 ## Использование
